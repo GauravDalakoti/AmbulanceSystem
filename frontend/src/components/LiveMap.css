@@ -1,0 +1,47 @@
+/* Minimal CSS for LiveMap */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Leaflet container styling */
+.leaflet-container {
+  font-family: inherit;
+  background: #f0f0f0;
+}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.leaflet-popup-content {
+  margin: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Route line should be clickable */
+.leaflet-interactive {
+  cursor: pointer;
+}
+
+.leaflet-interactive:hover {
+  opacity: 0.8;
+}
+
+/* Marker hover effect */
+.leaflet-marker-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
