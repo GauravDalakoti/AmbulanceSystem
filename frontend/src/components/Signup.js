@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 const Signup = () => {
     const navigate = useNavigate();
 
-    const { login } = useAuth()
+    // const { login } = useAuth()
 
     const [formData, setFormData] = useState({
         username: "",
@@ -28,7 +28,7 @@ const Signup = () => {
         e.preventDefault();
         
         try {
-            const response = await userApi.register(formData);
+            await userApi.register(formData);
             navigate("/sign-in");
         } catch (err) {
             setError("Registration failed");

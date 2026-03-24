@@ -1,13 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+// import Dashboard from './components/Dashboard';
 import LiveMap from './components/LiveMap';
 import AdminPanel from './components/AdminPanel';
 import EmergencyForm from './components/EmergencyForm';
 import './App.css';
 import DriverDashboard from './components/DriverDashboard';
 import SignIn from './components/SignIn';
-import { LogIn, LogOut, LogOutIcon } from 'lucide-react';
+import { LogIn, LogOutIcon } from 'lucide-react';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
 import Signup from './components/Signup';
@@ -15,7 +15,7 @@ import { Toaster } from "react-hot-toast";
 import toast from 'react-hot-toast';
 import { userApi } from './services/api';
 import HomePage from './components/HomePage';
-import { Home } from 'lucide-react';
+// import { Home } from 'lucide-react';
 
 function App() {
 

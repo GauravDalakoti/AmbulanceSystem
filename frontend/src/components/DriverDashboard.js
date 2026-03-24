@@ -25,7 +25,7 @@ const DriverDashboard = () => {
       clearInterval(timer);
       socketService.disconnect();
     };
-  }, []);
+  }, [loadData]);
 
   const loadData = async () => {
     try {
