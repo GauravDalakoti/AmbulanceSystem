@@ -17,7 +17,7 @@ class Graph {
     // Add nodes if they don't exist
     this.addNode(node1);
     this.addNode(node2);
-    
+
     // Add bidirectional edge (undirected graph for city roads)
     this.adjacencyList.get(node1).push({ node: node2, weight });
     this.adjacencyList.get(node2).push({ node: node1, weight });
@@ -73,10 +73,20 @@ class Graph {
     return graph;
   }
 
+  // loadGraph(graphData) {
+  //   this.adjacencyList.clear();
+  //   for (let node in graphData) {
+  //     this.adjacencyList.set(node, graphData[node]);
+  //   }
+  // }
+
   loadGraph(graphData) {
     this.adjacencyList.clear();
+
     for (let node in graphData) {
-      this.adjacencyList.set(node, graphData[node]);
+      for (let edge of graphData[node]) {
+        this.addEdge(node, edge.node, edge.weight);
+      }
     }
   }
 }

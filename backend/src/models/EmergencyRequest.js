@@ -35,6 +35,11 @@ const emergencyRequestSchema = new mongoose.Schema({
     ref: 'Ambulance',
     default: null
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    // default: null
+  },
   status: {
     type: String,
     enum: ['PENDING', 'ASSIGNED', 'IN_TRANSIT', 'REACHED', 'COMPLETED', 'CANCELLED'],

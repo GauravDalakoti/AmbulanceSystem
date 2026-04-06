@@ -200,7 +200,7 @@ const AdminPanel = () => {
         >
           🗺️ City Graph
         </button>
-       
+
       </div>
 
       <div className="admin-content">
@@ -392,6 +392,15 @@ const AdminPanel = () => {
                         required
                         value={hospitalForm.location}
                         onChange={(e) => setHospitalForm({ ...hospitalForm, location: e.target.value })}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>coordinates *</label>
+                      <input
+                        type="text"
+                        required
+                        value={hospitalForm.coordinates}
+                        onChange={(e) => setHospitalForm({ ...hospitalForm, coordinates: e.target.value })}
                       />
                     </div>
                     <div className="form-group">

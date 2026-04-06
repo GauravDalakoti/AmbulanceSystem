@@ -34,18 +34,49 @@ export const userApi = {
     return response.data;
   },
 
+  getProfile: (userId) => api.get(`/user/profile/${userId}`),
+  updateProfile: (userId, data) => api.put(`/user/profile/${userId}`, data),
+
+  // Emergencies
+  getEmergencies: (userId) => api.get(`/user/emergencies/${userId}`),
+  getActiveEmergency: (userId) => api.get(`/user/emergencies/${userId}/active`),
+  getEmergency: (emergencyId) => api.get(`/user/emergency/${emergencyId}`),
+  cancelEmergency: (emergencyId) =>
+    api.patch(`/user/emergency/${emergencyId}/cancel`),
+
+  // Ambulance Tracking
+  getAmbulanceLocation: (ambulanceId) =>
+    api.get(`/user/ambulance/${ambulanceId._id}/location`),
+
+  // Statistics
+  getStats: (userId) => api.get(`/user/stats/${userId}`),
+
+  // Graph/Map
+  getGraph: () => api.get('/user/graph'),
+
+  // Feedback
+  submitFeedback: (emergencyId, userId, rating, comment) =>
+    api.post(`/user/emergency/${emergencyId}/feedback`, {
+      userId,
+      rating,
+      comment
+    }),
+
+  // Notifications
+  getNotifications: (userId) => api.get(`/user/notifications/${userId}`)
+
 }
 
 // Emergency API
 export const emergencyAPI = {
   create: (data) => api.post('/emergencies', data),
-  getDriverEmergencies: (username) =>api.post('/driver-emergencies/username', {username}),
+  getDriverEmergencies: (username) => api.post('/driver-emergencies/username', { username }),
   getAll: (status) => api.get('/emergencies', { params: { status } }),
   getById: (id) => api.get(`/emergencies/${id}`),
   updateStatus: (id, status) => api.patch(`/emergencies/${id}/status`, { status }),
   complete: (id) => api.post(`/emergencies/${id}/complete`),
   getActive: () => api.get('/emergencies/active/list'),
-  
+
 };
 
 // Ambulance API
@@ -60,8 +91,7 @@ export const ambulanceAPI = {
   getAvailable: () => api.get('/ambulances/available/list'),
   // Get ambulance by driver username
   getByDriver: (username) => api.get(`/ambulances/driver-emergencies/${username}`),
-   
-  
+
 };
 
 // Hospital API
@@ -93,17 +123,17 @@ export const graphAPI = {
 export const driverAPI = {
   // Get driver's ambulance
   getAmbulance: () => api.get('/driver/ambulance'),
-  
+
   // Get driver's active emergency
   getActiveEmergency: () => api.get('/driver/active-emergency'),
-  
+
   // Update emergency status
-  updateEmergencyStatus: (emergencyId, status) => 
+  updateEmergencyStatus: (emergencyId, status) =>
     api.put(`/driver/emergency/${emergencyId}/status`, { status }),
-  
+
   // Get driver statistics
   getStats: () => api.get('/driver/stats'),
-  
+
   // Update driver location
   updateLocation: (location) => api.put('/driver/location', { location })
 };

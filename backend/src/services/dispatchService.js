@@ -88,14 +88,16 @@ class DispatchService {
   /**
    * Process emergency request and assign nearest available ambulance
    */
-  async processEmergency(emergencyData) {
+  async processEmergency(emergencyData, userId) {
     if (!this.isInitialized) {
       await this.initialize();
     }
 
     try {
       // Create emergency request
+
       const emergency = new EmergencyRequest(emergencyData);
+      emergency.userId = userId
       await emergency.save();
 
       console.log(`🆘 New emergency created: ${emergency._id} at ${emergency.patientLocation}`);
@@ -152,6 +154,7 @@ class DispatchService {
     let bestRoute = null;
 
     const dijkstra = new Dijkstra(this.graph);
+    console.log("LOCATION AMBULANCE", emergency.patientLocation);
 
     // Calculate shortest path from each ambulance to emergency location
     for (let ambulance of availableAmbulances) {
@@ -161,7 +164,7 @@ class DispatchService {
         ambulance.currentLocation,
         emergency.patientLocation
       );
-
+      console.log("RESULT:", result);
       console.log(`    Distance: ${result.distance?.toFixed(1) || 'N/A'} km`);
       console.log(`    Route: ${result.path ? result.path.join(' → ') : 'No path'}`);
 
@@ -218,9 +221,9 @@ class DispatchService {
     return null;
   }
 
-    /**
-   * assigned pending emergency (for real-time tracking)
-   */
+  /**
+ * assigned pending emergency (for real-time tracking)
+ */
   async assignPendingEmergency() {
 
     const pendingEmergency = await EmergencyRequest.findOne({
@@ -231,10 +234,12 @@ class DispatchService {
       console.log("No pending emergencies");
       return null;
     }
-
+    console.log("pending emergency:", pendingEmergency);
     console.log("🔄 Trying to assign ambulance to pending emergency");
 
     const assignment = await this.assignAmbulance(pendingEmergency);
+    console.log(" emergency:", assignment);
+
 
     if (assignment) {
       console.log("✅ Pending emergency assigned");

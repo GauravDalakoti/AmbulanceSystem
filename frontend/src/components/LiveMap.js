@@ -607,7 +607,7 @@ function RouteDisplay({ start, end, emergencyId, preference = 'balanced' }) {
             const coordinates = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
             const distance = (route.distance / 1000).toFixed(2);
             const duration = Math.round(route.duration / 60);
-            
+
             return {
               coordinates,
               distance,
@@ -621,13 +621,13 @@ function RouteDisplay({ start, end, emergencyId, preference = 'balanced' }) {
           switch (preference) {
             case 'shortest':
               // Shortest distance
-              selectedRoute = allRoutes.reduce((prev, curr) => 
+              selectedRoute = allRoutes.reduce((prev, curr) =>
                 parseFloat(curr.distance) < parseFloat(prev.distance) ? curr : prev
               );
               break;
             case 'fastest':
               // Fastest time
-              selectedRoute = allRoutes.reduce((prev, curr) => 
+              selectedRoute = allRoutes.reduce((prev, curr) =>
                 curr.duration < prev.duration ? curr : prev
               );
               break;
@@ -639,8 +639,8 @@ function RouteDisplay({ start, end, emergencyId, preference = 'balanced' }) {
           }
 
           setRouteCoords(selectedRoute.coordinates);
-          setRouteInfo({ 
-            distance: selectedRoute.distance, 
+          setRouteInfo({
+            distance: selectedRoute.distance,
             duration: selectedRoute.duration,
             totalRoutes: allRoutes.length
           });
@@ -930,11 +930,11 @@ const LiveMap = () => {
         <h3 style={{ margin: '0 0 12px 0', fontSize: '1rem', color: '#1f2937' }}>
           🎛️ Map Controls
         </h3>
-        
+
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
+          <label style={{
+            display: 'flex',
+            alignItems: 'center',
             cursor: 'pointer',
             fontSize: '0.9rem',
             color: '#374151'
@@ -1090,7 +1090,7 @@ const LiveMap = () => {
                   </h3>
                   <div style={{ fontSize: '0.9rem' }}>
                     <p style={{ margin: '5px 0' }}>
-                      <strong>Status:</strong> 
+                      <strong>Status:</strong>
                       <span style={{
                         marginLeft: '6px',
                         padding: '2px 8px',
@@ -1143,7 +1143,7 @@ const LiveMap = () => {
                     </h3>
                     <div style={{ fontSize: '0.9rem' }}>
                       <p style={{ margin: '6px 0' }}>
-                        <strong>Severity:</strong> 
+                        <strong>Severity:</strong>
                         <span style={{
                           marginLeft: '6px',
                           padding: '3px 10px',
@@ -1156,7 +1156,7 @@ const LiveMap = () => {
                         </span>
                       </p>
                       <p style={{ margin: '6px 0' }}>
-                        <strong>Status:</strong> 
+                        <strong>Status:</strong>
                         <span style={{
                           marginLeft: '6px',
                           padding: '2px 8px',

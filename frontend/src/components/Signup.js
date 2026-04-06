@@ -38,13 +38,13 @@ const Signup = () => {
     return (
         <div className="auth-container">
             <div className="auth-left">
-                <h1>🚑 HALDWANI DISPATCH</h1>
+                <h1> HALDWANI DISPATCH</h1>
                 <p>Create Account</p>
             </div>
 
             <div className="auth-right">
                 <div className="auth-card">
-                    <h2>Sign Up</h2>
+                    <h2 className="heading">Sign Up</h2>
 
                     {error && <p className="error">{error}</p>}
 

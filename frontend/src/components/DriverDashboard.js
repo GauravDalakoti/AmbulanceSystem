@@ -25,7 +25,7 @@ const DriverDashboard = () => {
       clearInterval(timer);
       socketService.disconnect();
     };
-  }, [loadData]);
+  }, []);
 
   const loadData = async () => {
     try {
@@ -34,7 +34,7 @@ const DriverDashboard = () => {
 
       // Get driver's ambulance info
       const ambRes = await ambulanceAPI.getByDriver(user.username);
-      // console.log(ambRes);
+      console.log(ambRes);
 
       const amb = await ambRes.data[0];
       setAmbulance(amb);

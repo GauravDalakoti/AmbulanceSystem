@@ -21,12 +21,12 @@ async function seedData() {
 
         const users = await User.create([
             {
-               username:"admin",
-               email:"admin56@gmail.com",
-               password:"admin321",
-               role:"admin"
+                username: "admin",
+                email: "admin56@gmail.com",
+                password: "admin321",
+                role: "admin"
             },
-       
+
         ]);
 
         console.log(`🏥 Created ${users.length} admin`);

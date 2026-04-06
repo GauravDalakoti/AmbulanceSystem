@@ -16,6 +16,9 @@ class Dijkstra {
    * @returns {Object} - { distance, path }
    */
   findShortestPath(source, destination) {
+
+    console.log("source destination",source, destination);
+    
     const distances = new Map();
     const previous = new Map();
     const visited = new Set();

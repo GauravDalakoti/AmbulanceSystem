@@ -2,13 +2,15 @@ import dispatchService from "../services/dispatchService.js";
 import { EmergencyRequest } from "../models/EmergencyRequest.js"
 import { Router } from 'express';
 import { Ambulance } from "../models/Ambulance.js";
+import { verifyJWT } from "../middleware/auth.middleware.js";
+import mongoose from "mongoose";
 
 const router = Router()
 
 // Create new emergency request
-router.post('/', async (req, res) => {
+router.post('/', verifyJWT, async (req, res) => {
   try {
-    const result = await dispatchService.processEmergency(req.body);
+    const result = await dispatchService.processEmergency(req.body, req.user._id);
 
     // Emit socket event for real-time update
     if (req.io) {
@@ -29,7 +31,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all emergencies
-router.get('/', async (req, res) => {
+router.get('/', verifyJWT, async (req, res) => {
   try {
     const { status, limit = 50 } = req.query;
 
@@ -46,9 +48,13 @@ router.get('/', async (req, res) => {
 });
 
 // Get emergency by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyJWT, async (req, res) => {
   try {
-    const emergency = await EmergencyRequest.findById(req.params.id)
+
+    let userId = new mongoose.Types.ObjectId(req.params.id);
+    console.log(userId);
+
+    const emergency = await EmergencyRequest.find({ userId: userId })
       .populate('assignedAmbulanceId');
 
     if (!emergency) {

@@ -7,9 +7,9 @@ const DriverMap = ({ driverLocation, patientLocation }) => {
 
   const route = patientLocation
     ? [
-        [driverLocation.lat, driverLocation.lng],
-        [patientLocation.lat, patientLocation.lng]
-      ]
+      [driverLocation.lat, driverLocation.lng],
+      [patientLocation.lat, patientLocation.lng]
+    ]
     : [];
 
   return (

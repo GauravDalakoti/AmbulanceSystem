@@ -15,7 +15,8 @@ import { Toaster } from "react-hot-toast";
 import toast from 'react-hot-toast';
 import { userApi } from './services/api';
 import HomePage from './components/HomePage';
-// import { Home } from 'lucide-react';
+import UserDashboard from './components/UserDashboard';
+import { LogOut } from 'lucide-react';
 
 function App() {
 
@@ -38,62 +39,57 @@ function App() {
     <Router>
       <div className="app">
         <nav className="navbar">
-          <div className="nav-container">
-            <div className="nav-brand">
-              <span className="brand-icon">🚑</span>
-              <span className="brand-text">Emergency Dispatch System</span>
-            </div>
+      <div className="nav-container">
 
-            <div className="nav-links">
-              {/* <Link to="/dashboard" className="nav-link">
-                <span className="nav-icon">📊</span>
-                Dashboard
-              </Link> */}
-              <Link to="/" className="nav-link">
-                <span className="nav-icon">📊</span>
-                Home
-              </Link>
-              <Link to="/map" className="nav-link">
-                <span className="nav-icon">🗺️</span>
-                Live Map
-              </Link>
-              <Link to="/emergency" className="nav-link">
-                <span className="nav-icon">🚨</span>
-                New Emergency
-              </Link>
-              {
-                user?.role === "driver" &&
+        {/* LOGO */}
+        <div className="nav-brand">
+          <span className="brand-icon">🚑</span>
+          <span className="brand-text">MedDispatch</span>
+        </div>
 
-                <Link to="/driver-dashboard" className="nav-link">
-                  <span className="nav-icon">🚨</span>
-                  Driver Dashboard
-                </Link>
+        {/* LINKS */}
+        <div className="nav-links">
 
-              }
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/map" className="nav-link">Live Map</Link>
+          <Link to="/emergency" className="nav-link highlight">
+            🚨 Emergency
+          </Link>
 
-              {
-                user?.role === "admin" &&
+          {user?.role === "driver" && (
+            <Link to="/driver-dashboard" className="nav-link">
+              Driver Panel
+            </Link>
+          )}
 
-                <Link to="/admin" className="nav-link">
-                  <span className="nav-icon">⚙️</span>
-                  Admin Dashboard
-                </Link>
-              }
+          {user?.role === "user" && (
+            <Link to="/user-dashboard" className="nav-link">
+              Dashboard
+            </Link>
+          )}
 
-              {user ? <button id="logout" onClick={handleLogout}>
-                <LogOutIcon size={"18"} />
-                <p>logout</p>
-              </button> :
-                <Link to="/sign-in" className="nav-link">
-                  <LogIn />
-                  get started
-                </Link>
+          {user?.role === "admin" && (
+            <Link to="/admin" className="nav-link">
+              Admin
+            </Link>
+          )}
 
-              }
+          {/* AUTH */}
+          {user ? (
+            <button className="logout-btn" onClick={handleLogout}>
+              <LogOut size={18} />
+              Logout
+            </button>
+          ) : (
+            <Link to="/sign-in" className="login-btn">
+              <LogIn size={18} />
+              Get Started
+            </Link>
+          )}
 
-            </div>
-          </div>
-        </nav>
+        </div>
+      </div>
+    </nav>
 
         <main className="main-content">
           <Routes>
@@ -105,6 +101,7 @@ function App() {
             <Route path="/emergency" element={<EmergencyForm />} />
             <Route path="/admin" element={<ProtectedRoute role="admin"><AdminPanel /></ProtectedRoute>} />
             <Route path="/driver-dashboard" element={<ProtectedRoute role="driver"><DriverDashboard /></ProtectedRoute>} />
+            <Route path="/user-dashboard" element={<ProtectedRoute role="user"><UserDashboard /></ProtectedRoute>} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<Signup />} />
           </Routes>

@@ -5,10 +5,9 @@ import { useAuth } from "../context/AuthContext";
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const { user } = useAuth()
-    const handleBookEmergency = () => {
-        // const token = document.cookie.includes("accessToken");
+    const { user } = useAuth();
 
+    const handleBookEmergency = () => {
         if (user) {
             navigate("/emergency");
         } else {
@@ -21,47 +20,50 @@ const HomePage = () => {
 
             {/* HERO */}
             <section className="hero">
-                <h1>🚑 Smart Emergency Dispatch System</h1>
-                <p>
-                    Real-time ambulance tracking, AI powered dispatch,
-                    and faster emergency response to save lives.
-                </p>
+                <div className="hero-content">
+                    <h1>
+                        Smart Emergency <span>Dispatch System</span>
+                    </h1>
+                    <p>
+                        Real-time ambulance tracking, intelligent dispatch, and
+                        faster response to save lives when every second matters.
+                    </p>
 
-
-                <button className="primary-btn" onClick={handleBookEmergency}>
-                    Get Started
-                </button>
-                <button className="primary-btn" onClick={handleBookEmergency}>
-                    Book Emergency
-                </button>
-
+                    <div className="hero-buttons">
+                        <button className="primary-btn" onClick={handleBookEmergency}>
+                            🚑 Get Started
+                        </button>
+                        <button className="secondary-btn" onClick={handleBookEmergency}>
+                            Book Emergency
+                        </button>
+                    </div>
+                </div>
             </section>
 
             {/* FEATURES */}
             <section className="features">
-
-                <h2>Why Use Our System</h2>
+                <h2>Why Choose Our System</h2>
 
                 <div className="feature-grid">
 
                     <div className="card">
                         <h3>📍 Live Tracking</h3>
-                        <p>Track ambulance movement in real time on map.</p>
+                        <p>Track ambulance movement in real-time with map integration.</p>
                     </div>
 
                     <div className="card">
                         <h3>⚡ Fast Dispatch</h3>
-                        <p>Nearest ambulance assigned automatically.</p>
+                        <p>Automatically assigns the nearest available ambulance.</p>
                     </div>
 
                     <div className="card">
                         <h3>🧠 Smart Routing</h3>
-                        <p>Optimized routes reduce response time.</p>
+                        <p>Optimized routes using shortest path algorithms.</p>
                     </div>
 
                     <div className="card">
-                        <h3>📊 Command Dashboard</h3>
-                        <p>Monitor emergencies and fleet in one place.</p>
+                        <h3>📊 Dashboard</h3>
+                        <p>Centralized control panel for monitoring emergencies.</p>
                     </div>
 
                 </div>
@@ -69,38 +71,38 @@ const HomePage = () => {
 
             {/* HOW IT WORKS */}
             <section className="how">
-
                 <h2>How It Works</h2>
 
                 <div className="steps">
 
                     <div className="step">
-                        <span>1</span>
+                        <span>01</span>
                         <p>Report emergency instantly</p>
                     </div>
 
                     <div className="step">
-                        <span>2</span>
-                        <p>System assigns nearest ambulance</p>
+                        <span>02</span>
+                        <p>Nearest ambulance assigned</p>
                     </div>
 
                     <div className="step">
-                        <span>3</span>
+                        <span>03</span>
                         <p>Driver navigates with live route</p>
                     </div>
 
                     <div className="step">
-                        <span>4</span>
+                        <span>04</span>
                         <p>Patient receives rapid care</p>
                     </div>
 
                 </div>
-
             </section>
 
             {/* CTA */}
             <section className="cta">
                 <h2>Need Immediate Help?</h2>
+                <p>Our system ensures fastest emergency response.</p>
+
                 <button className="danger-btn" onClick={handleBookEmergency}>
                     🚨 Request Ambulance Now
                 </button>
@@ -111,4 +113,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

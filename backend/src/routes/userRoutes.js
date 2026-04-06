@@ -1,7 +1,11 @@
 import { verifyJWT } from '../middleware/auth.middleware.js';
 import { User } from '../models/User.js';
+import mongoose from 'mongoose';
 
 import { Router } from 'express';
+import { EmergencyRequest } from '../models/EmergencyRequest.js';
+import { Ambulance } from '../models/Ambulance.js';
+import { CityGraph } from '../models/CityGraph.js';
 
 const router = Router()
 
@@ -129,6 +133,273 @@ router.get('/logout', verifyJWT, async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+router.get('/profile/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        console.log(userId);
+        let objectId = new mongoose.Types.ObjectId(userId);
+        const user = await User.findById(objectId).select('-password -refreshtoken');
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            data: user
+        });
+
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+});
+router.get('/stats/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        console.log(userId);
+        let objectId = new mongoose.Types.ObjectId(userId);
+
+        const totalEmergencies = await EmergencyRequest.countDocuments({ userId: objectId });
+
+        // const pendingEmergencies = await EmergencyRequest.countDocuments({ status: 'PENDING' });
+        const activeEmergencies = await EmergencyRequest.countDocuments({
+            status: { $in: ['ASSIGNED', 'IN_TRANSIT', 'REACHED'] },
+            userId: objectId
+        });
+
+        const completedEmergencies = await EmergencyRequest.countDocuments({
+            status: 'COMPLETED',
+            userId: objectId
+        });
+
+        res.json({
+            success: true,
+            data: {
+                totalEmergencies,
+                activeEmergencies,
+                completedEmergencies
+            }
+        });
+
+    } catch (error) {
+        console.error('Error fetching user stats:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+});
+
+// router.get('/ambulance/:ambulanceId/location', async (req, res) => {
+//     try {
+//         const { ambulanceId } = req.params;
+
+//         console.log("Incoming ID:", ambulanceId);
+
+//         // ✅ Safe validation
+//         if (!ambulanceId || !mongoose.Types.ObjectId.isValid(ambulanceId)) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Invalid ambulance ID"
+//             });
+//         }
+
+//         // ✅ Let mongoose handle it
+//         const ambulance = await Ambulance.findById(ambulanceId);
+
+//         if (!ambulance) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'Ambulance not found'
+//             });
+//         }
+
+//         const graph = await CityGraph.findOne();
+//         const nodeCoords = graph?.nodes?.[ambulance.currentLocation]?.coordinates;
+
+//         res.json({
+//             success: true,
+//             data: {
+//                 _id: ambulance._id,
+//                 ambulanceNumber: ambulance.ambulanceNumber,
+//                 currentLocation: ambulance.currentLocation,
+//                 coordinates: nodeCoords,
+//                 status: ambulance.status,
+//                 driver: ambulance.driver
+//             }
+//         });
+
+//     } catch (error) {
+//         console.error('Error fetching ambulance location:', error);
+//         res.status(500).json({
+//             success: false,
+//             message: 'Server error',
+//             error: error.message
+//         });
+//     }
+// });
+
+// ===== AMBULANCE TRACKING =====
+
+/**
+ * GET /api/user/ambulance/:ambulanceId/location
+ * Get real-time ambulance location
+ */
+router.get('/ambulance/:ambulanceId/location', async (req, res) => {
+    try {
+        const { ambulanceId } = req.params;
+
+        const ambulance = await Ambulance.findById(ambulanceId)
+            .populate('driver', 'name phone');
+
+        if (!ambulance) {
+            return res.status(404).json({
+                success: false,
+                message: 'Ambulance not found'
+            });
+        }
+
+        // Get coordinates for current location
+        const graph = await CityGraph.findOne();
+        const nodeCoords = graph?.nodes?.[ambulance.currentLocation]?.coordinates;
+
+        res.json({
+            success: true,
+            data: {
+                _id: ambulance._id,
+                ambulanceNumber: ambulance.ambulanceNumber,
+                currentLocation: ambulance.currentLocation,
+                coordinates: nodeCoords,
+                status: ambulance.status,
+                driver: ambulance.driver
+            }
+        });
+
+    } catch (error) {
+        console.error('Error fetching ambulance location:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+});
+
+router.get('/graph', async (req, res) => {
+    try {
+        const graph = await CityGraph.findOne();
+
+        if (!graph) {
+            return res.status(404).json({
+                success: false,
+                message: 'Graph not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            data: graph
+        });
+
+    } catch (error) {
+        console.error('Error fetching graph:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+});
+
+router.patch('/emergency/:emergencyId/cancel',verifyJWT, async (req, res) => {
+    try {
+        const { emergencyId } = req.params;
+        // const { userId } = req.body;
+        const userId=req.user?._id
+
+        let objectId = new mongoose.Types.ObjectId(emergencyId);
+
+        console.log("nbgjhg",emergencyId,userId);
+        
+        const emergency = await EmergencyRequest.findById(objectId);
+
+        if (!emergency) {
+            return res.status(404).json({
+                success: false,
+                message: 'Emergency not found'
+            });
+        }
+
+        console.log(emergency);
+        
+
+        // Verify ownership
+        // if (emergency.userId !== userId) {
+        //     return res.status(403).json({
+        //         success: false,
+        //         message: 'Unauthorized: Not your emergency'
+        //     });
+        // }
+
+        // Can only cancel if not completed
+        if (emergency.status === 'COMPLETED') {
+            return res.status(400).json({
+                success: false,
+                message: 'Cannot cancel completed emergency'
+            });
+        }
+
+        // If ambulance was assigned, make it available again
+        if (emergency.assignedAmbulanceId) {
+            await Ambulance.findByIdAndUpdate(
+                emergency.assignedAmbulanceId,
+                { status: 'AVAILABLE' }
+            );
+
+            // Emit socket event
+            req.io.emit('ambulanceStatusUpdate', {
+                ambulanceId: emergency.assignedAmbulanceId,
+                status: 'AVAILABLE'
+            });
+        }
+
+        // Update emergency status
+        emergency.status = 'CANCELLED';
+        // emergency.cancelledAt = Date.now();
+        // emergency.cancellationReason = reason || 'Cancelled by user';
+        await emergency.save();
+
+        // Emit socket event
+        req.io.emit('emergencyStatusUpdate', {
+            emergencyId: emergency._id,
+            status: 'CANCELLED'
+        });
+
+        res.json({
+            success: true,
+            message: 'Emergency cancelled successfully',
+            data: emergency
+        });
+
+    } catch (error) {
+        console.error('Error cancelling emergency:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
     }
 });
 

@@ -164,8 +164,13 @@ router.get('/driver-emergencies/:username', async (req, res) => {
     }
     console.log("fgfh fghhf fhgf", driverDetails._id);
 
-    const emergency = await EmergencyRequest.find({ assignedAmbulanceId: driverDetails._id })
-    console.log("kjhjhj",emergency);
+    const emergency = await EmergencyRequest.find(
+      { assignedAmbulanceId: driverDetails._id, status: { $in: ['ASSIGNED', 'IN_TRANSIT', 'REACHED'] } },
+
+
+
+    )
+    console.log("kjhjhj", emergency);
 
     res.json(emergency)
 

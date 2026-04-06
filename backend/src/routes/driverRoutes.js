@@ -4,11 +4,11 @@
 // const verifyJWT = require('../middleware/verifyJWT');
 
 import { EmergencyRequest } from "../models/EmergencyRequest.js";
-import {Ambulance} from "../models/Ambulance.js"
+import { Ambulance } from "../models/Ambulance.js"
 import { Router } from 'express';
 import { verifyJWT } from "../middleware/auth.middleware.js";
 
-const router=Router()
+const router = Router()
 
 /**
  * GET /api/driver/ambulance
@@ -17,7 +17,7 @@ const router=Router()
 router.get('/ambulance', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
-    
+
     // Find ambulance assigned to this driver
     const ambulance = await Ambulance.findOne({
       'driver.name': username
@@ -51,7 +51,7 @@ router.get('/ambulance', verifyJWT, async (req, res) => {
 router.get('/active-emergency', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
-    
+
     // Find driver's ambulance
     const ambulance = await Ambulance.findOne({
       'driver.name': username
@@ -183,7 +183,7 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
 router.get('/stats', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
-    
+
     // Find driver's ambulance
     const ambulance = await Ambulance.findOne({
       'driver.name': username
