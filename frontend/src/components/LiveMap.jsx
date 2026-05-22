@@ -498,13 +498,26 @@ import socketService from '../services/socket';
 import 'leaflet/dist/leaflet.css';
 import './LiveMap.css';
 
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
 // Fix default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
 });
+
+// Fix default marker icons
+// delete L.Icon.Default.prototype._getIconUrl;
+// L.Icon.Default.mergeOptions({
+//   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+//   iconUrl: require('leaflet/dist/images/marker-icon.png'),
+//   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+// });
 
 // CUSTOM ICONS
 const createCustomIcon = (emoji, size = 40) => {
@@ -949,7 +962,7 @@ const LiveMap = () => {
           </label>
         </div>
 
-        <div>
+        {/* <div>
           <label style={{ fontSize: '0.85rem', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
             Route Preference:
           </label>
@@ -975,7 +988,7 @@ const LiveMap = () => {
             {routePreference === 'fastest' && '✓ Prioritizes main roads'}
             {routePreference === 'shortest' && '✓ May use narrow streets'}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Legend */}

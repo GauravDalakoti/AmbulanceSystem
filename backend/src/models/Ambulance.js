@@ -39,7 +39,7 @@ const ambulanceSchema = new mongoose.Schema({
   }
 });
 
-// Update lastUpdated on save
+
 ambulanceSchema.pre('save', function(next) {
   this.lastUpdated = Date.now();
   next();

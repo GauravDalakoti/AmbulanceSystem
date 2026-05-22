@@ -7,7 +7,7 @@ const hospitalSchema = new mongoose.Schema({
   location: {
     type: String,
     required: true
-    // Node ID in the city graph
+    
   },
   address: {
     type: String,

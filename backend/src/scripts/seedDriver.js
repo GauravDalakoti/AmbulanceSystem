@@ -10,16 +10,14 @@ async function seedData() {
             useUnifiedTopology: true
         });
 
-        console.log('✅ Connected to MongoDB');
+        console.log(' Connected to MongoDB');
 
-        // Clear existing data
-        // await Hospital.deleteMany({});
-        // await Ambulance.deleteMany({});
-        // await CityGraph.deleteMany({});
+        
+        await User.deleteMany({});
+       
 
-        console.log('🧹 Cleared existing data');
+        console.log(' Cleared existing data');
 
-        // ========== HALDWANI HOSPITALS ==========
         const users = await User.create([
             {
                username:"Ramesh Kumar",
@@ -38,13 +36,43 @@ async function seedData() {
                email:"deepakd3@gmail.com",
                password:"deepak123",
                role:"driver"
-            }
+            },
+            {
+               username:"Mohit Joshi",
+               email:"mohitd4@gmail.com",
+               password:"Mohit123",
+               role:"driver"
+            },
+            {
+               username:"Rahul Bisht",
+               email:"rahuld5@gmail.com",
+               password:"rahul123",
+               role:"driver"
+            },
+            {
+               username:"Sandeep Bora",
+               email:"sandeepd6@gmail.com",
+               password:"sandeep123",
+               role:"driver"
+            },
+            {
+               username:"Kamal Mehra",
+               email:"kamald7@gmail.com",
+               password:"kamal123",
+               role:"driver"
+            },
+            {
+               username:"Nitin Verma",
+               email:"nitind8@gmail.com",
+               password:"nitin123",
+               role:"driver"
+            },
         ]);
 
-        console.log(`🏥 Created ${users.length} drivers`);
+        console.log(` Created ${users.length} drivers`);
     }
     catch (error) {
-        console.error('❌ Seeding failed:', error);
+        console.error(' Seeding failed:', error);
         process.exit(1);
     }
 }

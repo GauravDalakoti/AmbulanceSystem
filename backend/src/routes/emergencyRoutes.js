@@ -7,12 +7,11 @@ import mongoose from "mongoose";
 
 const router = Router()
 
-// Create new emergency request
 router.post('/', verifyJWT, async (req, res) => {
   try {
     const result = await dispatchService.processEmergency(req.body, req.user._id);
 
-    // Emit socket event for real-time update
+    
     if (req.io) {
       req.io.emit('newEmergency', result);
       if (result.success) {
@@ -30,7 +29,7 @@ router.post('/', verifyJWT, async (req, res) => {
   }
 });
 
-// Get all emergencies
+
 router.get('/', verifyJWT, async (req, res) => {
   try {
     const { status, limit = 50 } = req.query;
@@ -47,7 +46,6 @@ router.get('/', verifyJWT, async (req, res) => {
   }
 });
 
-// Get emergency by ID
 router.get('/:id', verifyJWT, async (req, res) => {
   try {
 
@@ -67,7 +65,7 @@ router.get('/:id', verifyJWT, async (req, res) => {
   }
 });
 
-//Get Driver Emergency
+
 router.post('/driver-emergencies/username', async (req, res) => {
 
   try {
@@ -145,7 +143,7 @@ router.patch('/:id/status', async (req, res) => {
 
       await ambulance.save();
 
-      // 🔥 RUN DISPATCH AGAIN
+     
       const assignment = await dispatchService.assignPendingEmergency();
 
       if (assignment && req.io) {
@@ -168,7 +166,7 @@ router.patch('/:id/status', async (req, res) => {
   }
 });
 
-// Complete emergency
+
 router.post('/:id/complete', async (req, res) => {
   try {
     const result = await dispatchService.completeEmergency(req.params.id);
@@ -177,7 +175,7 @@ router.post('/:id/complete', async (req, res) => {
       return res.status(404).json({ error: 'Emergency not found' });
     }
 
-    // Emit socket event
+
     if (req.io) {
       req.io.emit('emergencyCompleted', result);
       req.io.emit('ambulanceStatusUpdate', result.ambulance);
@@ -189,7 +187,7 @@ router.post('/:id/complete', async (req, res) => {
   }
 });
 
-// Get active emergencies
+
 router.get('/active/list', async (req, res) => {
   try {
     const emergencies = await EmergencyRequest.find({

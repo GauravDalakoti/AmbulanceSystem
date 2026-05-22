@@ -27,7 +27,7 @@ const generateAccessAndRefreshToken = async (userId) => {
     }
 }
 
-// register
+
 router.post('/register', async (req, res) => {
     console.log("jghggghgfhfghfgfgh");
 
@@ -88,7 +88,7 @@ router.post("/login", async (req, res) => {
 
         const cookieOptions = {
             httpOnly: true,
-            secure: false, // true in production
+            secure: false, 
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         };
@@ -103,7 +103,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// logout
+
 router.get('/logout', verifyJWT, async (req, res) => {
     try {
         await User.findByIdAndUpdate(
@@ -111,7 +111,7 @@ router.get('/logout', verifyJWT, async (req, res) => {
             req.user._id,
             {
                 $unset: {
-                    refreshToken: 1 // this removes the field from document
+                    refreshToken: 1 
                 }
             },
             {
@@ -202,61 +202,7 @@ router.get('/stats/:userId', async (req, res) => {
     }
 });
 
-// router.get('/ambulance/:ambulanceId/location', async (req, res) => {
-//     try {
-//         const { ambulanceId } = req.params;
 
-//         console.log("Incoming ID:", ambulanceId);
-
-//         // ✅ Safe validation
-//         if (!ambulanceId || !mongoose.Types.ObjectId.isValid(ambulanceId)) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Invalid ambulance ID"
-//             });
-//         }
-
-//         // ✅ Let mongoose handle it
-//         const ambulance = await Ambulance.findById(ambulanceId);
-
-//         if (!ambulance) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: 'Ambulance not found'
-//             });
-//         }
-
-//         const graph = await CityGraph.findOne();
-//         const nodeCoords = graph?.nodes?.[ambulance.currentLocation]?.coordinates;
-
-//         res.json({
-//             success: true,
-//             data: {
-//                 _id: ambulance._id,
-//                 ambulanceNumber: ambulance.ambulanceNumber,
-//                 currentLocation: ambulance.currentLocation,
-//                 coordinates: nodeCoords,
-//                 status: ambulance.status,
-//                 driver: ambulance.driver
-//             }
-//         });
-
-//     } catch (error) {
-//         console.error('Error fetching ambulance location:', error);
-//         res.status(500).json({
-//             success: false,
-//             message: 'Server error',
-//             error: error.message
-//         });
-//     }
-// });
-
-// ===== AMBULANCE TRACKING =====
-
-/**
- * GET /api/user/ambulance/:ambulanceId/location
- * Get real-time ambulance location
- */
 router.get('/ambulance/:ambulanceId/location', async (req, res) => {
     try {
         const { ambulanceId } = req.params;
@@ -271,7 +217,7 @@ router.get('/ambulance/:ambulanceId/location', async (req, res) => {
             });
         }
 
-        // Get coordinates for current location
+      
         const graph = await CityGraph.findOne();
         const nodeCoords = graph?.nodes?.[ambulance.currentLocation]?.coordinates;
 
@@ -345,15 +291,7 @@ router.patch('/emergency/:emergencyId/cancel',verifyJWT, async (req, res) => {
         console.log(emergency);
         
 
-        // Verify ownership
-        // if (emergency.userId !== userId) {
-        //     return res.status(403).json({
-        //         success: false,
-        //         message: 'Unauthorized: Not your emergency'
-        //     });
-        // }
 
-        // Can only cancel if not completed
         if (emergency.status === 'COMPLETED') {
             return res.status(400).json({
                 success: false,
@@ -361,27 +299,25 @@ router.patch('/emergency/:emergencyId/cancel',verifyJWT, async (req, res) => {
             });
         }
 
-        // If ambulance was assigned, make it available again
+   
         if (emergency.assignedAmbulanceId) {
             await Ambulance.findByIdAndUpdate(
                 emergency.assignedAmbulanceId,
                 { status: 'AVAILABLE' }
             );
 
-            // Emit socket event
             req.io.emit('ambulanceStatusUpdate', {
                 ambulanceId: emergency.assignedAmbulanceId,
                 status: 'AVAILABLE'
             });
         }
 
-        // Update emergency status
+      
         emergency.status = 'CANCELLED';
-        // emergency.cancelledAt = Date.now();
-        // emergency.cancellationReason = reason || 'Cancelled by user';
+     
         await emergency.save();
 
-        // Emit socket event
+     
         req.io.emit('emergencyStatusUpdate', {
             emergencyId: emergency._id,
             status: 'CANCELLED'

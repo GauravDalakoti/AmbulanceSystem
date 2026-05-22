@@ -1,7 +1,4 @@
 
-// const Ambulance = require('../models/Ambulance');
-// const Emergency = require('../models/Emergency');
-// const verifyJWT = require('../middleware/verifyJWT');
 
 import { EmergencyRequest } from "../models/EmergencyRequest.js";
 import { Ambulance } from "../models/Ambulance.js"
@@ -10,15 +7,11 @@ import { verifyJWT } from "../middleware/auth.middleware.js";
 
 const router = Router()
 
-/**
- * GET /api/driver/ambulance
- * Get ambulance details by driver username
- */
+
 router.get('/ambulance', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
 
-    // Find ambulance assigned to this driver
     const ambulance = await Ambulance.findOne({
       'driver.name': username
     }).populate('currentLocation');
@@ -44,15 +37,12 @@ router.get('/ambulance', verifyJWT, async (req, res) => {
   }
 });
 
-/**
- * GET /api/driver/active-emergency
- * Get active emergency assigned to driver's ambulance
- */
+
 router.get('/active-emergency', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
 
-    // Find driver's ambulance
+
     const ambulance = await Ambulance.findOne({
       'driver.name': username
     });
@@ -64,7 +54,6 @@ router.get('/active-emergency', verifyJWT, async (req, res) => {
       });
     }
 
-    // Find active emergency for this ambulance
     const emergency = await EmergencyRequest.findOne({
       assignedAmbulanceId: ambulance._id,
       status: { $in: ['ASSIGNED', 'IN_TRANSIT', 'REACHED'] }
@@ -84,17 +73,14 @@ router.get('/active-emergency', verifyJWT, async (req, res) => {
   }
 });
 
-/**
- * PUT /api/driver/emergency/:id/status
- * Update emergency status by driver
- */
+
 router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
     const { username } = req.user;
 
-    // Validate status
+   
     const validStatuses = ['IN_TRANSIT', 'REACHED', 'COMPLETED'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
@@ -103,7 +89,6 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
       });
     }
 
-    // Find driver's ambulance
     const ambulance = await Ambulance.findOne({
       'driver.name': username
     });
@@ -115,7 +100,6 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
       });
     }
 
-    // Find emergency
     const emergency = await EmergencyRequest.findById(id);
 
     if (!emergency) {
@@ -125,7 +109,6 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
       });
     }
 
-    // Check if this emergency is assigned to driver's ambulance
     if (String(emergency.assignedAmbulanceId) !== String(ambulance._id)) {
       return res.status(403).json({
         success: false,
@@ -133,10 +116,9 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
       });
     }
 
-    // Update emergency status
+
     emergency.status = status;
 
-    // If completed, update ambulance status and completion time
     if (status === 'COMPLETED') {
       emergency.completedAt = new Date();
       ambulance.status = 'AVAILABLE';
@@ -145,7 +127,7 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
 
     await emergency.save();
 
-    // Emit socket event
+   
     const io = req.app.get('io');
     if (io) {
       io.emit('emergencyUpdated', {
@@ -176,15 +158,11 @@ router.put('/emergency/:id/status', verifyJWT, async (req, res) => {
   }
 });
 
-/**
- * GET /api/driver/stats
- * Get driver statistics
- */
+
 router.get('/stats', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
 
-    // Find driver's ambulance
     const ambulance = await Ambulance.findOne({
       'driver.name': username
     });
@@ -196,7 +174,6 @@ router.get('/stats', verifyJWT, async (req, res) => {
       });
     }
 
-    // Get completed emergencies for today
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -206,13 +183,13 @@ router.get('/stats', verifyJWT, async (req, res) => {
       completedAt: { $gte: today }
     });
 
-    // Get all completed emergencies
+
     const totalEmergencies = await EmergencyRequest.countDocuments({
       assignedAmbulanceId: ambulance._id,
       status: 'COMPLETED'
     });
 
-    // Calculate average response time
+    
     const completedEmergencies = await EmergencyRequest.find({
       assignedAmbulanceId: ambulance._id,
       status: 'COMPLETED',
@@ -247,10 +224,7 @@ router.get('/stats', verifyJWT, async (req, res) => {
   }
 });
 
-/**
- * PUT /api/driver/location
- * Update driver's current location
- */
+
 router.put('/location', verifyJWT, async (req, res) => {
   try {
     const { username } = req.user;
@@ -276,7 +250,7 @@ router.put('/location', verifyJWT, async (req, res) => {
       });
     }
 
-    // Emit location update
+   
     const io = req.app.get('io');
     if (io) {
       io.emit('ambulanceLocationUpdated', {

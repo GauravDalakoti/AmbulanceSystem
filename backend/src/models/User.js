@@ -40,9 +40,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-/* =========================
-   Hash Password Before Save
-========================= */
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
@@ -50,16 +48,12 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-/* =========================
-   Compare Password
-========================= */
+
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-/* =========================
-   Generate Access Token
-========================= */
+
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
@@ -74,9 +68,7 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-/* =========================
-   Generate Refresh Token
-========================= */
+
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {

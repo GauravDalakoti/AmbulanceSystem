@@ -36,7 +36,7 @@ const cityGraphSchema = new mongoose.Schema({
   }
 });
 
-// Update metadata before saving
+
 cityGraphSchema.pre('save', function(next) {
   this.metadata.totalNodes = this.nodes.size;
   let edgeCount = 0;

@@ -10,14 +10,9 @@ async function seedData() {
             useUnifiedTopology: true
         });
 
-        console.log('✅ Connected to MongoDB');
+        console.log(' Connected to MongoDB');
 
-        // Clear existing data
-        // await Hospital.deleteMany({});
-        // await Ambulance.deleteMany({});
-        // await CityGraph.deleteMany({});
-
-        // console.log('🧹 Cleared existing data');
+        
 
         const users = await User.create([
             {
@@ -29,10 +24,10 @@ async function seedData() {
 
         ]);
 
-        console.log(`🏥 Created ${users.length} admin`);
+        console.log(` Created ${users.length} admin`);
     }
     catch (error) {
-        console.error('❌ Seeding failed:', error);
+        console.error(' Seeding failed:', error);
         process.exit(1);
     }
 }

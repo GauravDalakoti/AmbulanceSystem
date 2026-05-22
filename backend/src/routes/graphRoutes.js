@@ -5,17 +5,16 @@ import { Router } from 'express';
 
 const router=Router()
 
-// Get city graph
+
 router.get('/', async (req, res) => {
   try {
-    // FIXED: Changed from 'MainCity' to 'Haldwani'
+  
     const graph = await CityGraph.findOne({ cityName: 'Haldwani' });
     
     if (!graph) {
       return res.status(404).json({ error: 'City graph not found' });
     }
     
-    // Convert Map to object for JSON response
     const graphData = {
       cityName: graph.cityName,
       nodes: Object.fromEntries(graph.nodes),
@@ -23,19 +22,19 @@ router.get('/', async (req, res) => {
       metadata: graph.metadata
     };
     
-    console.log('📊 Graph data sent:', {
+    console.log(' Graph data sent:', {
       cityName: graphData.cityName,
       nodeCount: Object.keys(graphData.nodes).length
     });
     
     res.json(graphData);
   } catch (error) {
-    console.error('❌ Error fetching graph:', error);
+    console.error(' Error fetching graph:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// Add node to graph
+
 router.post('/nodes', async (req, res) => {
   try {
     const { nodeId, name, type, coordinates } = req.body;
@@ -58,7 +57,7 @@ router.post('/nodes', async (req, res) => {
   }
 });
 
-// Add edge to graph
+
 router.post('/edges', async (req, res) => {
   try {
     const { from, to, weight } = req.body;
@@ -87,7 +86,6 @@ router.post('/edges', async (req, res) => {
   }
 });
 
-// Remove edge from graph
 router.delete('/edges', async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -113,7 +111,7 @@ router.delete('/edges', async (req, res) => {
   }
 });
 
-// Get statistics
+
 router.get('/stats', async (req, res) => {
   try {
     const stats = await dispatchService.getStatistics();

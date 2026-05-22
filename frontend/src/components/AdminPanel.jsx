@@ -10,7 +10,6 @@ const AdminPanel = () => {
   const [graphData, setGraphData] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  // Form states
   const [ambulanceForm, setAmbulanceForm] = useState({
     ambulanceNumber: '',
     currentLocation: '',
@@ -278,6 +277,23 @@ const AdminPanel = () => {
                         onChange={(e) => setAmbulanceForm({ ...ambulanceForm, currentLocation: e.target.value })}
                       />
                     </div>
+
+                    <div className="form-group">
+                      <label>Hospital</label>
+                      <select
+                        value={ambulanceForm.hospitalId}
+                        onChange={(e) => setAmbulanceForm({ ...ambulanceForm, hospitalId: e.target.value })}
+                      >
+                        <option value="Dr. Sushila Tiwari Government Hospital">Dr. Sushila Tiwari Government Hospital</option>
+                        <option value="Krishna Hospital Haldwani">Krishna Hospital Haldwani</option>
+                        <option value="MAIIMS Satellite Center HaldwaniAINTENANCE">AIIMS Satellite Center Haldwani</option>
+                        <option value="City Multispeciality Hospital">City Multispeciality Hospital</option>
+                        <option value="Gaulapar Trauma Center">Gaulapar Trauma Center</option>
+                        <option value="Kathgodam Emergency Care">Kathgodam Emergency Care</option>
+                        <option value="Teenpani Critical Care Hospital">Teenpani Critical Care Hospital</option>
+                      </select>
+                    </div>
+                    
                     <div className="form-group">
                       <label>Status</label>
                       <select

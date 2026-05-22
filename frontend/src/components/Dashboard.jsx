@@ -172,9 +172,9 @@ const Dashboard = () => {
                   <span className={`status-badge ${getStatusBadge(emergency.status)}`}>
                     {emergency.status}
                   </span>
-                  <span className={`status-badge ${getStatusBadge(emergency.status)}`}>
+                  {/* <span className={`status-badge ${getStatusBadge(emergency.status)}`}>
                     {emergency.status}
-                  </span>
+                  </span> */}
                 </div>
 
                 <div className="emergency-details">

@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
 class SocketService {
   constructor() {
@@ -21,11 +21,11 @@ class SocketService {
     });
 
     this.socket.on('connect', () => {
-      console.log('✅ Socket connected:', this.socket.id);
+      console.log(' Socket connected:', this.socket.id);
     });
 
     this.socket.on('disconnect', () => {
-      console.log('❌ Socket disconnected');
+      console.log(' Socket disconnected');
     });
 
     this.socket.on('connect_error', (error) => {

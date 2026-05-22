@@ -38,13 +38,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Make io available to routes
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-// MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI 
 
 mongoose.connect(MONGODB_URI, {
@@ -52,15 +50,15 @@ mongoose.connect(MONGODB_URI, {
   useUnifiedTopology: true
 })
   .then(() => {
-    console.log('✅ Connected to MongoDB');
+    console.log(' Connected to MongoDB');
     // Initialize dispatch service
     return dispatchService.initialize();
   })
   .then(() => {
-    console.log('✅ Dispatch service initialized');
+    console.log(' Dispatch service initialized');
   })
   .catch(err => {
-    console.error('❌ MongoDB connection error:', err);
+    console.error(' MongoDB connection error:', err);
   });
 
 // Routes
@@ -80,17 +78,14 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('🔌 Client connected:', socket.id);
 
-  // Handle ambulance location updates
   socket.on('updateAmbulanceLocation', async (data) => {
     try {
       const { ambulanceId, location } = data;
       await dispatchService.updateAmbulanceLocation(ambulanceId, location);
 
-      // Broadcast to all clients
       io.emit('ambulanceLocationUpdate', {
         ambulanceId,
         location
@@ -100,7 +95,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Handle emergency status updates
   socket.on('updateEmergencyStatus', async (data) => {
     try {
       const { emergencyId, status } = data;
@@ -118,37 +112,31 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Join room for specific emergency
   socket.on('joinEmergency', (emergencyId) => {
     socket.join(`emergency-${emergencyId}`);
     console.log(`Socket ${socket.id} joined emergency-${emergencyId}`);
   });
 
-  // Leave emergency room
   socket.on('leaveEmergency', (emergencyId) => {
     socket.leave(`emergency-${emergencyId}`);
     console.log(`Socket ${socket.id} left emergency-${emergencyId}`);
   });
 
-  // Handle driver location updates
   socket.on('updateLocation', (data) => {
-    console.log('📍 Location update:', data);
+    console.log('Location update:', data);
     io.emit('locationUpdated', data);
   });
 
-  // Handle emergency status updates
   socket.on('emergencyStatusUpdate', (data) => {
-    console.log('🚨 Emergency status update:', data);
+    console.log(' Emergency status update:', data);
     io.emit('emergencyUpdated', data);
   });
 
-  // Disconnect
   socket.on('disconnect', () => {
-    console.log('🔌 Client disconnected:', socket.id);
+    console.log(' Client disconnected:', socket.id);
   });
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({
@@ -165,8 +153,8 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📡 Socket.IO enabled`);
+  console.log(` Server running on port ${PORT}`);
+  console.log(` Socket.IO enabled`);
 });
 
 export { app, io };

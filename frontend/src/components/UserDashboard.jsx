@@ -7,12 +7,17 @@ import { emergencyAPI, graphAPI, userApi } from '../services/api';
 import 'leaflet/dist/leaflet.css';
 import './UserDashboard.css';
 
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
 // Fix default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
 });
 
 // Custom icons
@@ -229,6 +234,9 @@ const UserDashboard = () => {
 
   const fetchAmbulanceLocation = async (ambulanceId) => {
     try {
+
+      console.log("ghfn fhjfhfhf ",ambulanceId);
+      
       const ambRes = await userApi.getAmbulanceLocation(ambulanceId);
       // console.log("Ambulance:", ambulanceLocation);
       // console.log("Start:", nodeCoords[ambulanceLocation?.currentLocation]);

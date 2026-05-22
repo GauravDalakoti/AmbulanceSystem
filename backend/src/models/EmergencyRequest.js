@@ -47,11 +47,11 @@ const emergencyRequestSchema = new mongoose.Schema({
   },
   responseTime: {
     type: Number
-    // Time in seconds to assign ambulance
+    
   },
   estimatedArrival: {
     type: Number
-    // Estimated time in minutes
+    
   },
   actualArrival: {
     type: Date
@@ -61,11 +61,11 @@ const emergencyRequestSchema = new mongoose.Schema({
   },
   route: {
     type: [String]
-    // Array of node IDs representing the path
+    
   },
   distance: {
     type: Number
-    // Total distance in km
+  
   },
   coordinates: {
     lat: Number,
@@ -73,7 +73,7 @@ const emergencyRequestSchema = new mongoose.Schema({
   }
 });
 
-// Calculate response time before saving
+
 emergencyRequestSchema.pre('save', function (next) {
   if (this.isModified('status') && this.status === 'ASSIGNED' && !this.responseTime) {
     this.responseTime = Math.floor((Date.now() - this.timestamp) / 1000);

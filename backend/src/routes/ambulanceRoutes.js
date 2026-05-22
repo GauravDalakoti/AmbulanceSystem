@@ -2,6 +2,7 @@ import dispatchService from "../services/dispatchService.js";
 import { Ambulance } from "../models/Ambulance.js"
 import { Router } from 'express';
 import { EmergencyRequest } from "../models/EmergencyRequest.js";
+import { Hospital } from "../models/Hospital.js";
 
 const router = Router()
 
@@ -36,10 +37,19 @@ router.get('/:id', async (req, res) => {
 // Create new ambulance
 router.post('/', async (req, res) => {
   try {
+
+    const data=req.body;
+    console.log("gfhff fgfhfhfff fdgddgd",data);
+    const {hospitalId}=req.body;
+
+    const id =await Hospital.findOne({name:hospitalId}).select("_id")
+    console.log(id);
+    
     const ambulance = new Ambulance(req.body);
+    ambulance.hospitalId=id;
     await ambulance.save();
 
-    // Emit socket event
+    
     if (req.io) {
       req.io.emit('ambulanceAdded', ambulance);
     }
@@ -63,7 +73,6 @@ router.patch('/:id/location', async (req, res) => {
       return res.status(404).json({ error: 'Ambulance not found' });
     }
 
-    // Emit socket event for real-time tracking
     if (req.io) {
       req.io.emit('ambulanceLocationUpdate', {
         ambulanceId: ambulance._id,
@@ -90,7 +99,6 @@ router.patch('/:id/status', async (req, res) => {
     ambulance.status = status;
     await ambulance.save();
 
-    // Emit socket event
     if (req.io) {
       req.io.emit('ambulanceStatusUpdate', ambulance);
     }

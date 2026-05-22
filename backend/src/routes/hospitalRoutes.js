@@ -4,7 +4,6 @@ import { Router } from 'express';
 const router=Router()
 
 
-// Get all hospitals
 router.get('/', async (req, res) => {
   try {
     const hospitals = await Hospital.find();
@@ -14,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get hospital by ID
+
 router.get('/:id', async (req, res) => {
   try {
     const hospital = await Hospital.findById(req.params.id);
@@ -29,13 +28,13 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create new hospital
+
 router.post('/', async (req, res) => {
   try {
     const hospital = new Hospital(req.body);
     await hospital.save();
     
-    // Emit socket event
+   
     if (req.io) {
       req.io.emit('hospitalAdded', hospital);
     }
@@ -46,7 +45,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update hospital
+
 router.put('/:id', async (req, res) => {
   try {
     const hospital = await Hospital.findByIdAndUpdate(
@@ -65,7 +64,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Update hospital capacity
 router.patch('/:id/capacity', async (req, res) => {
   try {
     const hospital = await Hospital.findById(req.params.id);
@@ -83,7 +81,7 @@ router.patch('/:id/capacity', async (req, res) => {
   }
 });
 
-// Delete hospital
+
 router.delete('/:id', async (req, res) => {
   try {
     const hospital = await Hospital.findByIdAndDelete(req.params.id);
