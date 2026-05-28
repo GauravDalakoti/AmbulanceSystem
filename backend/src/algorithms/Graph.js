@@ -73,13 +73,6 @@ class Graph {
     return graph;
   }
 
-  // loadGraph(graphData) {
-  //   this.adjacencyList.clear();
-  //   for (let node in graphData) {
-  //     this.adjacencyList.set(node, graphData[node]);
-  //   }
-  // }
-
   loadGraph(graphData) {
     this.adjacencyList.clear();
 

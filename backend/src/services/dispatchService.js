@@ -49,187 +49,187 @@ class DispatchService {
    * Create default Haldwani city graph
    */
   async createDefaultCityGraph() {
-    
+
 
     const nodes = new Map([
-    ["A", { name: "Kathgodam", type: "junction", coordinates: { lat: 29.2692, lng: 79.5318 } }],
-    ["B", { name: "Sushila Tiwari Hospital", type: "hospital", coordinates: { lat: 29.2183, lng: 79.5130 } }],
-    ["C", { name: "Mukhani", type: "residential", coordinates: { lat: 29.2305, lng: 79.4976 } }],
-    ["D", { name: "Ranibagh", type: "residential", coordinates: { lat: 29.2825, lng: 79.5480 } }],
-    ["E", { name: "Bhotia Padao", type: "junction", coordinates: { lat: 29.2209, lng: 79.5055 } }],
-    ["F", { name: "Heera Nagar", type: "residential", coordinates: { lat: 29.2158, lng: 79.5191 } }],
-    ["G", { name: "Gas Godown Road", type: "residential", coordinates: { lat: 29.2226, lng: 79.5283 } }],
-    ["H", { name: "Krishna Hospital", type: "hospital", coordinates: { lat: 29.2198, lng: 79.5202 } }],
-    ["I", { name: "Bus Stand Haldwani", type: "junction", coordinates: { lat: 29.2220, lng: 79.5147 } }],
-    ["J", { name: "Industrial Area", type: "industrial", coordinates: { lat: 29.2070, lng: 79.4938 } }],
-    ["K", { name: "Nainital Road", type: "highway", coordinates: { lat: 29.2330, lng: 79.5100 } }],
-    ["L", { name: "Tikonia Chauraha", type: "junction", coordinates: { lat: 29.2188, lng: 79.5075 } }],
-    ["M", { name: "Pilikothi", type: "residential", coordinates: { lat: 29.2270, lng: 79.5165 } }],
-    ["N", { name: "Damuadhunga", type: "residential", coordinates: { lat: 29.2402, lng: 79.4895 } }],
-    ["O", { name: "Gaulapar", type: "residential", coordinates: { lat: 29.2015, lng: 79.5485 } }],
-    ["P", { name: "Transport Nagar", type: "industrial", coordinates: { lat: 29.2140, lng: 79.4820 } }],
-    ["Q", { name: "Teenpani", type: "junction", coordinates: { lat: 29.1958, lng: 79.5008 } }],
-    ["R", { name: "MBPG College", type: "landmark", coordinates: { lat: 29.2189, lng: 79.5162 } }],
-    ["S", { name: "Railway Bazaar", type: "market", coordinates: { lat: 29.2665, lng: 79.5242 } }],
-    ["T", { name: "Panchakki", type: "residential", coordinates: { lat: 29.2252, lng: 79.4950 } }],
-    ["U", { name: "Nawabi Road", type: "residential", coordinates: { lat: 29.2290, lng: 79.5205 } }],
-    ["V", { name: "Kusumkhera", type: "residential", coordinates: { lat: 29.2388, lng: 79.5011 } }],
-    ["W", { name: "Unchapul", type: "junction", coordinates: { lat: 29.2149, lng: 79.5098 } }],
-    ["X", { name: "Laldanth", type: "outskirts", coordinates: { lat: 29.1880, lng: 79.4705 } }],
-    ["Y", { name: "AIIMS Satellite Center", type: "hospital", coordinates: { lat: 29.2355, lng: 79.5148 } }],
-    ["Z", { name: "Bareilly Road", type: "highway", coordinates: { lat: 29.2030, lng: 79.4995 } }]
-  ]);
+      ["A", { name: "Kathgodam", type: "junction", coordinates: { lat: 29.2692, lng: 79.5318 } }],
+      ["B", { name: "Sushila Tiwari Hospital", type: "hospital", coordinates: { lat: 29.2183, lng: 79.5130 } }],
+      ["C", { name: "Mukhani", type: "residential", coordinates: { lat: 29.2305, lng: 79.4976 } }],
+      ["D", { name: "Ranibagh", type: "residential", coordinates: { lat: 29.2825, lng: 79.5480 } }],
+      ["E", { name: "Bhotia Padao", type: "junction", coordinates: { lat: 29.2209, lng: 79.5055 } }],
+      ["F", { name: "Heera Nagar", type: "residential", coordinates: { lat: 29.2158, lng: 79.5191 } }],
+      ["G", { name: "Gas Godown Road", type: "residential", coordinates: { lat: 29.2226, lng: 79.5283 } }],
+      ["H", { name: "Krishna Hospital", type: "hospital", coordinates: { lat: 29.2198, lng: 79.5202 } }],
+      ["I", { name: "Bus Stand Haldwani", type: "junction", coordinates: { lat: 29.2220, lng: 79.5147 } }],
+      ["J", { name: "Industrial Area", type: "industrial", coordinates: { lat: 29.2070, lng: 79.4938 } }],
+      ["K", { name: "Nainital Road", type: "highway", coordinates: { lat: 29.2330, lng: 79.5100 } }],
+      ["L", { name: "Tikonia Chauraha", type: "junction", coordinates: { lat: 29.2188, lng: 79.5075 } }],
+      ["M", { name: "Pilikothi", type: "residential", coordinates: { lat: 29.2270, lng: 79.5165 } }],
+      ["N", { name: "Damuadhunga", type: "residential", coordinates: { lat: 29.2402, lng: 79.4895 } }],
+      ["O", { name: "Gaulapar", type: "residential", coordinates: { lat: 29.2015, lng: 79.5485 } }],
+      ["P", { name: "Transport Nagar", type: "industrial", coordinates: { lat: 29.2140, lng: 79.4820 } }],
+      ["Q", { name: "Teenpani", type: "junction", coordinates: { lat: 29.1958, lng: 79.5008 } }],
+      ["R", { name: "MBPG College", type: "landmark", coordinates: { lat: 29.2189, lng: 79.5162 } }],
+      ["S", { name: "Railway Bazaar", type: "market", coordinates: { lat: 29.2665, lng: 79.5242 } }],
+      ["T", { name: "Panchakki", type: "residential", coordinates: { lat: 29.2252, lng: 79.4950 } }],
+      ["U", { name: "Nawabi Road", type: "residential", coordinates: { lat: 29.2290, lng: 79.5205 } }],
+      ["V", { name: "Kusumkhera", type: "residential", coordinates: { lat: 29.2388, lng: 79.5011 } }],
+      ["W", { name: "Unchapul", type: "junction", coordinates: { lat: 29.2149, lng: 79.5098 } }],
+      ["X", { name: "Laldanth", type: "outskirts", coordinates: { lat: 29.1880, lng: 79.4705 } }],
+      ["Y", { name: "AIIMS Satellite Center", type: "hospital", coordinates: { lat: 29.2355, lng: 79.5148 } }],
+      ["Z", { name: "Bareilly Road", type: "highway", coordinates: { lat: 29.2030, lng: 79.4995 } }]
+    ]);
 
-    
+
 
     const edges = new Map([
-    ["A", [{ node: "B", weight: 5.1 }, { node: "D", weight: 6.4 }, { node: "S", weight: 2.1 }]],
+      ["A", [{ node: "B", weight: 5.1 }, { node: "D", weight: 6.4 }, { node: "S", weight: 2.1 }]],
 
-    ["B", [
-      { node: "A", weight: 5.1 },
-      { node: "C", weight: 2.8 },
-      { node: "E", weight: 1.9 },
-      { node: "H", weight: 3.0 },
-      { node: "L", weight: 1.0 },
-      { node: "R", weight: 1.5 }
-    ]],
+      ["B", [
+        { node: "A", weight: 5.1 },
+        { node: "C", weight: 2.8 },
+        { node: "E", weight: 1.9 },
+        { node: "H", weight: 3.0 },
+        { node: "L", weight: 1.0 },
+        { node: "R", weight: 1.5 }
+      ]],
 
-    ["C", [
-      { node: "B", weight: 2.8 },
-      { node: "F", weight: 2.1 },
-      { node: "I", weight: 3.6 },
-      { node: "T", weight: 1.4 },
-      { node: "V", weight: 2.0 }
-    ]],
+      ["C", [
+        { node: "B", weight: 2.8 },
+        { node: "F", weight: 2.1 },
+        { node: "I", weight: 3.6 },
+        { node: "T", weight: 1.4 },
+        { node: "V", weight: 2.0 }
+      ]],
 
-    ["D", [
-      { node: "A", weight: 6.4 },
-      { node: "S", weight: 3.2 }
-    ]],
+      ["D", [
+        { node: "A", weight: 6.4 },
+        { node: "S", weight: 3.2 }
+      ]],
 
-    ["E", [
-      { node: "B", weight: 1.9 },
-      { node: "F", weight: 1.6 },
-      { node: "G", weight: 2.3 },
-      { node: "L", weight: 1.2 }
-    ]],
+      ["E", [
+        { node: "B", weight: 1.9 },
+        { node: "F", weight: 1.6 },
+        { node: "G", weight: 2.3 },
+        { node: "L", weight: 1.2 }
+      ]],
 
-    ["F", [
-      { node: "C", weight: 2.1 },
-      { node: "E", weight: 1.6 },
-      { node: "I", weight: 2.9 },
-      { node: "W", weight: 1.7 }
-    ]],
+      ["F", [
+        { node: "C", weight: 2.1 },
+        { node: "E", weight: 1.6 },
+        { node: "I", weight: 2.9 },
+        { node: "W", weight: 1.7 }
+      ]],
 
-    ["G", [
-      { node: "E", weight: 2.3 },
-      { node: "H", weight: 1.8 },
-      { node: "U", weight: 2.0 }
-    ]],
+      ["G", [
+        { node: "E", weight: 2.3 },
+        { node: "H", weight: 1.8 },
+        { node: "U", weight: 2.0 }
+      ]],
 
-    ["H", [
-      { node: "B", weight: 3.0 },
-      { node: "G", weight: 1.8 },
-      { node: "R", weight: 1.3 }
-    ]],
+      ["H", [
+        { node: "B", weight: 3.0 },
+        { node: "G", weight: 1.8 },
+        { node: "R", weight: 1.3 }
+      ]],
 
-    ["I", [
-      { node: "C", weight: 3.6 },
-      { node: "F", weight: 2.9 },
-      { node: "R", weight: 1.0 },
-      { node: "K", weight: 2.2 }
-    ]],
+      ["I", [
+        { node: "C", weight: 3.6 },
+        { node: "F", weight: 2.9 },
+        { node: "R", weight: 1.0 },
+        { node: "K", weight: 2.2 }
+      ]],
 
-    ["J", [
-      { node: "P", weight: 2.5 },
-      { node: "Q", weight: 3.0 },
-      { node: "Z", weight: 2.0 }
-    ]],
+      ["J", [
+        { node: "P", weight: 2.5 },
+        { node: "Q", weight: 3.0 },
+        { node: "Z", weight: 2.0 }
+      ]],
 
-    ["K", [
-      { node: "I", weight: 2.2 },
-      { node: "M", weight: 1.4 },
-      { node: "Y", weight: 2.0 }
-    ]],
+      ["K", [
+        { node: "I", weight: 2.2 },
+        { node: "M", weight: 1.4 },
+        { node: "Y", weight: 2.0 }
+      ]],
 
-    ["L", [
-      { node: "B", weight: 1.0 },
-      { node: "E", weight: 1.2 },
-      { node: "W", weight: 1.5 }
-    ]],
+      ["L", [
+        { node: "B", weight: 1.0 },
+        { node: "E", weight: 1.2 },
+        { node: "W", weight: 1.5 }
+      ]],
 
-    ["M", [
-      { node: "K", weight: 1.4 },
-      { node: "U", weight: 1.8 }
-    ]],
+      ["M", [
+        { node: "K", weight: 1.4 },
+        { node: "U", weight: 1.8 }
+      ]],
 
-    ["N", [
-      { node: "V", weight: 2.3 },
-      { node: "T", weight: 3.0 }
-    ]],
+      ["N", [
+        { node: "V", weight: 2.3 },
+        { node: "T", weight: 3.0 }
+      ]],
 
-    ["O", [
-      { node: "Q", weight: 5.0 },
-      { node: "W", weight: 4.5 }
-    ]],
+      ["O", [
+        { node: "Q", weight: 5.0 },
+        { node: "W", weight: 4.5 }
+      ]],
 
-    ["P", [
-      { node: "J", weight: 2.5 },
-      { node: "X", weight: 4.8 }
-    ]],
+      ["P", [
+        { node: "J", weight: 2.5 },
+        { node: "X", weight: 4.8 }
+      ]],
 
-    ["Q", [
-      { node: "J", weight: 3.0 },
-      { node: "O", weight: 5.0 },
-      { node: "Z", weight: 1.7 }
-    ]],
+      ["Q", [
+        { node: "J", weight: 3.0 },
+        { node: "O", weight: 5.0 },
+        { node: "Z", weight: 1.7 }
+      ]],
 
-    ["R", [
-      { node: "B", weight: 1.5 },
-      { node: "H", weight: 1.3 },
-      { node: "I", weight: 1.0 }
-    ]],
+      ["R", [
+        { node: "B", weight: 1.5 },
+        { node: "H", weight: 1.3 },
+        { node: "I", weight: 1.0 }
+      ]],
 
-    ["S", [
-      { node: "A", weight: 2.1 },
-      { node: "D", weight: 3.2 }
-    ]],
+      ["S", [
+        { node: "A", weight: 2.1 },
+        { node: "D", weight: 3.2 }
+      ]],
 
-    ["T", [
-      { node: "C", weight: 1.4 },
-      { node: "N", weight: 3.0 }
-    ]],
+      ["T", [
+        { node: "C", weight: 1.4 },
+        { node: "N", weight: 3.0 }
+      ]],
 
-    ["U", [
-      { node: "G", weight: 2.0 },
-      { node: "M", weight: 1.8 }
-    ]],
+      ["U", [
+        { node: "G", weight: 2.0 },
+        { node: "M", weight: 1.8 }
+      ]],
 
-    ["V", [
-      { node: "C", weight: 2.0 },
-      { node: "N", weight: 2.3 }
-    ]],
+      ["V", [
+        { node: "C", weight: 2.0 },
+        { node: "N", weight: 2.3 }
+      ]],
 
-    ["W", [
-      { node: "F", weight: 1.7 },
-      { node: "L", weight: 1.5 },
-      { node: "O", weight: 4.5 }
-    ]],
+      ["W", [
+        { node: "F", weight: 1.7 },
+        { node: "L", weight: 1.5 },
+        { node: "O", weight: 4.5 }
+      ]],
 
-    ["X", [
-      { node: "P", weight: 4.8 }
-    ]],
+      ["X", [
+        { node: "P", weight: 4.8 }
+      ]],
 
-    ["Y", [
-      { node: "K", weight: 2.0 },
-      { node: "M", weight: 2.2 }
-    ]],
+      ["Y", [
+        { node: "K", weight: 2.0 },
+        { node: "M", weight: 2.2 }
+      ]],
 
-    ["Z", [
-      { node: "J", weight: 2.0 },
-      { node: "Q", weight: 1.7 }
-    ]]
-  ]);
+      ["Z", [
+        { node: "J", weight: 2.0 },
+        { node: "Q", weight: 1.7 }
+      ]]
+    ]);
 
     await CityGraph.create({
       cityName: 'Haldwani',

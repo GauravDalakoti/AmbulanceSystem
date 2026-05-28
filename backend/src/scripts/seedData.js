@@ -21,7 +21,7 @@ async function seedData() {
 
     console.log(' Cleared existing data');
 
-    // ========== HALDWANI HOSPITALS ==========
+   
     // const hospitals = await Hospital.create([
     //   {
     //     name: 'Dr. Sushila Tiwari Government Hospital',
@@ -61,7 +61,7 @@ async function seedData() {
     //   }
     // ]);
 
-    // ========== EXPANDED HALDWANI HOSPITALS ==========
+    
 
 const hospitals = await Hospital.create([
   {
@@ -231,9 +231,9 @@ const hospitals = await Hospital.create([
   }
 ]);
 
-    console.log(`🏥 Created ${hospitals.length} hospitals`);
+    console.log(` Created ${hospitals.length} hospitals`);
 
-    // ========== HALDWANI AMBULANCES ==========
+    
     // const ambulances = await Ambulance.create([
     //   {
     //     ambulanceNumber: 'UK04-AMB-001',
@@ -370,9 +370,9 @@ const hospitals = await Hospital.create([
   }
 ]);
 
-    console.log(`🚑 Created ${ambulances.length} ambulances`);
+    console.log(` Created ${ambulances.length} ambulances`);
 
-    // ========== HALDWANI CITY GRAPH ==========
+    
     // EXACTLY matching dispatchService.js default graph
     // const nodes = new Map([
     //   ["A", { name: "Kathgodam", type: "junction", coordinates: { lat: 29.2692, lng: 79.5318 } }],
@@ -400,7 +400,7 @@ const hospitals = await Hospital.create([
     //   ["J", [{ node: "A", weight: 4.7 }]]
     // ]);
 
-    // ========== EXPANDED HALDWANI CITY GRAPH ==========
+   
 
 const nodes = new Map([
   ["A", { name: "Kathgodam", type: "junction", coordinates: { lat: 29.2692, lng: 79.5318 } }],
@@ -594,13 +594,12 @@ const edges = new Map([
       }
     });
 
-    console.log('🗺️ Created Haldwani city graph');
+    console.log(' Created Haldwani city graph');
     console.log(`   - Nodes: ${nodes.size}`);
     console.log(`   - Edges: ${Array.from(edges.values()).reduce((sum, arr) => sum + arr.length, 0)}`);
 
-    // ========== SUMMARY ==========
-    console.log('\n✅ Database seeded successfully!');
-    console.log('📊 Summary:');
+    console.log('\n Database seeded successfully!');
+    console.log(' Summary:');
     console.log(`   - City: Haldwani`);
     console.log(`   - Hospitals: ${hospitals.length} (B, H)`);
     console.log(`   - Ambulances: ${ambulances.length} (A, B, H)`);
@@ -610,7 +609,7 @@ const edges = new Map([
     await mongoose.disconnect();
     process.exit(0);
   } catch (error) {
-    console.error('❌ Seeding failed:', error);
+    console.error(' Seeding failed:', error);
     process.exit(1);
   }
 }
